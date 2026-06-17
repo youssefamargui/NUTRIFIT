@@ -1,34 +1,46 @@
+require("dotenv").config();
 const axios = require("axios");
 
-const BASE_URL = "https://www.themealdb.com/api/json/v1/1";
+const BASE_URL = "https://api.spoonacular.com";
+const API_KEY = process.env.SPOONACULAR_API_KEY;
 
 
-// 🔥 GET RANDOM RECIPES
-exports.getRandomMeals = async () => {
+// 🔥 GET RECIPES FILTERED BY CALORIES (complexSearch)
+exports.getRecipesByCalories = async (maxCalories, number = 8) => {
 
-    const response = await axios.get(`${BASE_URL}/search.php?s=`);
-
-    return response.data.meals;
-};
-
-
-// 🔥 SEARCH BY NAME
-exports.searchMeals = async (name) => {
-
-    const response = await axios.get(`${BASE_URL}/search.php?s=${name}`);
-
-    return response.data.meals;
-};
-
-
-// 🔥 FILTER SIMPLE (calories mock)
-exports.filterByCalories = (meals, maxCalories) => {
-
-    if (!meals) return [];
-
-    return meals.filter(meal => {
-
-        // TheMealDB n'a pas calories → on simule
-        return Math.random() * 800 <= maxCalories;
+    const response = await axios.get(`${BASE_URL}/recipes/complexSearch`, {
+        params: {
+            apiKey: API_KEY,
+            maxCalories,
+            number,
+            addRecipeNutrition: true
+        }
     });
+
+    return response.data.results;
+};
+
+
+// 🔥 GET RECIPE DETAIL BY ID
+exports.getRecipeById = async (id) => {
+
+    const response = await axios.get(`${BASE_URL}/recipes/${id}/information`, {
+        params: {
+            apiKey: API_KEY,
+            includeNutrition: true
+        }
+    });
+
+    return response.data;
+};
+
+
+// 🔥 EXTRACT CALORIES FROM NUTRITION
+exports.getCalories = (recipe) => {
+
+    const nutrients = recipe.nutrition ? recipe.nutrition.nutrients : [];
+
+    const calories = nutrients.find(n => n.name === "Calories");
+
+    return calories ? Math.round(calories.amount) : null;
 };

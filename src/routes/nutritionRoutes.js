@@ -5,11 +5,19 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const nutritionController = require("../controllers/nutritionController");
 
 
-// GET meals for user
+// GET recettes adaptées aux calories cibles
 router.get(
-    "/meals",
+    "/recipes",
     authMiddleware,
     nutritionController.getUserMeals
+);
+
+
+// GET détail d'une recette
+router.get(
+    "/recipes/:id",
+    authMiddleware,
+    nutritionController.getMealById
 );
 
 module.exports = router;
