@@ -8,6 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const nutritionRoutes = require("./routes/nutritionRoutes");
 const workoutRoutes = require("./routes/workoutRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 // config dotenv
 dotenv.config();
@@ -24,6 +25,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/nutrition", nutritionRoutes);
 app.use("/api/workouts", workoutRoutes);
+app.use("/api/admin", adminRoutes);
 
 // test route
 app.get("/", (req, res) => {

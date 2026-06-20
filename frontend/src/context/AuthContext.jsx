@@ -24,6 +24,12 @@ export function AuthProvider({ children }) {
     return res.data.user;
   };
 
+  // MISE A JOUR DU PROFIL EN MEMOIRE (après PUT /users/me)
+  const updateUser = (updated) => {
+    localStorage.setItem("user", JSON.stringify(updated));
+    setUser(updated);
+  };
+
   // DECONNEXION
   const logout = () => {
     localStorage.removeItem("token");
@@ -32,7 +38,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>
+    <AuthContext.Provider value={{ user, register, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

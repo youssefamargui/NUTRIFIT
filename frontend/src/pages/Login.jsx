@@ -22,7 +22,9 @@ export default function Login() {
   };
 
   return (
+    <div className="auth-wrap">
     <div className="card">
+      <div className="brand">NUTRITFIRST</div>
       <h1>Connexion</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -45,6 +47,7 @@ export default function Login() {
       <p>
         Pas de compte ? <Link to="/register">S'inscrire</Link>
       </p>
+    </div>
     </div>
   );
 }

@@ -22,7 +22,9 @@ export default function Register() {
   };
 
   return (
+    <div className="auth-wrap">
     <div className="card">
+      <div className="brand">NUTRITFIRST</div>
       <h1>Inscription</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -45,6 +47,7 @@ export default function Register() {
       <p>
         Déjà un compte ? <Link to="/login">Se connecter</Link>
       </p>
+    </div>
     </div>
   );
 }
